@@ -2,7 +2,7 @@
  * @Filename: index.js
  * @Author: jin
  * @Email: xiaoyanjinx@gmail.com
- * @Last Modified time: 2017-08-22 17:47:02
+ * @Last Modified time: 2017-08-22 18:50:00
  */
 
 import express from 'express'
@@ -55,8 +55,8 @@ app.use(bodyParser.urlencoded({extended: true}))
 app.post('/sendAlertMessage', upload.array(), (req, res) => {
   res.send(req.body)
   if(h5room) {
-    h5room.say(req.body.html)
-    h5room.say(req.body.link)
+    h5room.say(req.body.html + req.body.link)
+    concact.say(JSON.stringify(req.body.text))
   }
 })
 
