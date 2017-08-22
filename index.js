@@ -2,7 +2,7 @@
  * @Filename: index.js
  * @Author: jin
  * @Email: xiaoyanjinx@gmail.com
- * @Last Modified time: 2017-08-22 16:05:02
+ * @Last Modified time: 2017-08-22 17:00:55
  */
 
 import express from 'express'
@@ -11,7 +11,8 @@ import multer from 'multer'
 import {Wechaty, Room, Contact} from 'wechaty'
 import QrcodeTerminal from 'qrcode-terminal'
 
-let concact
+//let concact
+let h5room
 
 Wechaty.instance() // Singleton
   .on('scan', (url, code) => {
@@ -23,21 +24,22 @@ Wechaty.instance() // Singleton
   })
   .on('login', (user) => {
     console.log(`User ${user} logined`)
-    Room.find({topic: /@zju$/}).then((room) => {
-      console.log('find room @zju')
+    Room.find({topic: /前端H5/}).then((room) => {
+      console.log('find room 前端H5')
+      h5room = room
     })
-    Contact.find({name: 'jin'}).then((target) => {
-      console.log(JSON.stringify(target))
-      concact = target
-    })
+    // Contact.find({name: 'jin'}).then((target) => {
+    //   console.log(JSON.stringify(target))
+    //   concact = target
+    // })
   })
   .on('message', (message) => {
-    const room    = message.room()
-    const sender  = message.from()
-    const content = message.content()
+    // const room    = message.room()
+    // const sender  = message.from()
+    // const content = message.content()
 
-    console.log(sender)
-    console.log(content)
+    //console.log(sender)
+    //console.log(content)
 
     if(!message.self() && concact) {
       //concact.say(content)
@@ -48,14 +50,13 @@ Wechaty.instance() // Singleton
 let app = express()
 let upload = multer()
 app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.urlencoded({extended: true}))
 
-app.post('/sendAlertMessage', upload.array(), function (req, res) {
-  console.log(req.body)
+app.post('/sendAlertMessage', upload.array(), (req, res) => {
   res.send(req.body)
-  if(concact) {
-    concact.say(req.body.html)
-    concact.say(req.body.link)
+  if(h5room) {
+    h5room.say(req.body.html)
+    h5room.say(req.body.link)
   }
 })
 
