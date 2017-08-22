@@ -2,11 +2,26 @@
  * @Filename: index.js
  * @Author: jin
  * @Email: xiaoyanjinx@gmail.com
- * @Last Modified time: 2017-08-21 21:27:07
+ * @Last Modified time: 2017-08-22 10:18:42
  */
 
-import {Wechaty} from 'wechaty'
+import express from 'express'
+import bodyParser from 'body-parser'
+import multer from 'multer'
+import {Wechaty, Room, Contact} from 'wechaty'
 import QrcodeTerminal from 'qrcode-terminal'
+
+let app = express()
+let upload = multer()
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true }))
+
+app.post('/sendAlertMessage', upload.array(), function (req, res) {
+  console.log(req.body)
+  res.send('Hello World')
+})
+
+app.listen(9000)
 
 Wechaty.instance() // Singleton
   .on('scan', (url, code) => {
@@ -18,9 +33,21 @@ Wechaty.instance() // Singleton
   })
   .on('login', (user) => {
     console.log(`User ${user} logined`)
+    Room.find({topic: /@zju$/}).then((room) => {
+      console.log('find room @zju')
+    })
   })
   .on('message', (message) => {
-    console.log(`Message: ${message}`)
-    console.log(JSON.stringify(message))
+    const room    = message.room()
+    const sender  = message.from()
+    const content = message.content()
+
+    console.log(sender)
+    console.log(content)
+
+    if(!message.self()) {
+      //room.say(JSON.stringify(sender.obj))
+      //room.say('content:' + content)
+    }
   })
   .init()
