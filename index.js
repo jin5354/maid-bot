@@ -2,7 +2,7 @@
  * @Filename: index.js
  * @Author: jin
  * @Email: xiaoyanjinx@gmail.com
- * @Last Modified time: 2017-08-22 15:09:30
+ * @Last Modified time: 2017-08-22 16:05:02
  */
 
 import express from 'express'
@@ -54,8 +54,8 @@ app.post('/sendAlertMessage', upload.array(), function (req, res) {
   console.log(req.body)
   res.send(req.body)
   if(concact) {
-    concact.say(JSON.stringify(req.body))
     concact.say(req.body.html)
+    concact.say(req.body.link)
   }
 })
 
