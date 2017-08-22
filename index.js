@@ -2,7 +2,7 @@
  * @Filename: index.js
  * @Author: jin
  * @Email: xiaoyanjinx@gmail.com
- * @Last Modified time: 2017-08-22 17:19:17
+ * @Last Modified time: 2017-08-22 17:31:32
  */
 
 import express from 'express'
@@ -11,7 +11,7 @@ import multer from 'multer'
 import {Wechaty, Room, Contact} from 'wechaty'
 import QrcodeTerminal from 'qrcode-terminal'
 
-//let concact
+let concact
 let h5room
 
 Wechaty.instance() // Singleton
@@ -28,10 +28,10 @@ Wechaty.instance() // Singleton
       console.log('find room 前端H5')
       h5room = room
     })
-    // Contact.find({name: 'jin'}).then((target) => {
-    //   console.log(JSON.stringify(target))
-    //   concact = target
-    // })
+    Contact.find({name: 'jin'}).then((target) => {
+      console.log(JSON.stringify(target))
+      concact = target
+    })
   })
   .on('message', (message) => {
     // const room    = message.room()
@@ -57,6 +57,13 @@ app.post('/sendAlertMessage', upload.array(), (req, res) => {
   if(h5room) {
     h5room.say(req.body.html)
     h5room.say(req.body.link)
+  }
+})
+
+app.post('/sendTestMessage', upload.array(), (req, res) => {
+  res.send(req.body)
+  if(concact) {
+    h5room.say(req.body.text)
   }
 })
 
