@@ -1,4 +1,4 @@
-maid_bot
+# maid_bot
 
 ## run
 
@@ -12,6 +12,7 @@ $ docker run -ti -p9000:9000 --rm --volume="$(pwd)":/bot zixia/wechaty index.js
 ## interface
 
 POST /sendAlertMessage
+
 send alert message to 前端H5 room
 
 ```json
@@ -22,6 +23,7 @@ send alert message to 前端H5 room
 ```
 
 POST /sendTestMessage
+
 send test message to jin
 
 ```json
