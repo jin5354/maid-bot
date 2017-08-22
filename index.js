@@ -2,7 +2,7 @@
  * @Filename: index.js
  * @Author: jin
  * @Email: xiaoyanjinx@gmail.com
- * @Last Modified time: 2017-08-22 17:00:55
+ * @Last Modified time: 2017-08-22 17:19:17
  */
 
 import express from 'express'
@@ -41,7 +41,7 @@ Wechaty.instance() // Singleton
     //console.log(sender)
     //console.log(content)
 
-    if(!message.self() && concact) {
+    if(!message.self()) {
       //concact.say(content)
     }
   })
