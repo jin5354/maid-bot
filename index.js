@@ -2,7 +2,7 @@
  * @Filename: index.js
  * @Author: jin
  * @Email: xiaoyanjinx@gmail.com
- * @Last Modified time: 2017-08-22 17:31:32
+ * @Last Modified time: 2017-08-22 17:47:02
  */
 
 import express from 'express'
@@ -63,7 +63,7 @@ app.post('/sendAlertMessage', upload.array(), (req, res) => {
 app.post('/sendTestMessage', upload.array(), (req, res) => {
   res.send(req.body)
   if(concact) {
-    h5room.say(req.body.text)
+    concact.say(req.body.text)
   }
 })
 
