@@ -2,7 +2,7 @@
  * @Filename: index.js
  * @Author: jin
  * @Email: xiaoyanjinx@gmail.com
- * @Last Modified time: 2017-08-22 14:37:02
+ * @Last Modified time: 2017-08-22 15:09:30
  */
 
 import express from 'express'
@@ -40,7 +40,7 @@ Wechaty.instance() // Singleton
     console.log(content)
 
     if(!message.self() && concact) {
-      concact.say(content)
+      //concact.say(content)
     }
   })
   .init()
@@ -55,6 +55,7 @@ app.post('/sendAlertMessage', upload.array(), function (req, res) {
   res.send(req.body)
   if(concact) {
     concact.say(JSON.stringify(req.body))
+    concact.say(req.body.html)
   }
 })
 
