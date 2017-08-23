@@ -2,7 +2,7 @@
  * @Filename: index.js
  * @Author: jin
  * @Email: xiaoyanjinx@gmail.com
- * @Last Modified time: 2017-08-22 18:50:00
+ * @Last Modified time: 2017-08-23 09:33:56
  */
 
 import express from 'express'
@@ -13,6 +13,7 @@ import QrcodeTerminal from 'qrcode-terminal'
 
 let concact
 let h5room
+let messageArray = []
 
 Wechaty.instance() // Singleton
   .on('scan', (url, code) => {
@@ -25,8 +26,8 @@ Wechaty.instance() // Singleton
   .on('login', (user) => {
     console.log(`User ${user} logined`)
     Room.find({topic: /前端H5/}).then((room) => {
-      console.log('find room 前端H5')
       h5room = room
+      console.log('find room 前端H5')
     })
     Contact.find({name: 'jin'}).then((target) => {
       console.log(JSON.stringify(target))
@@ -53,12 +54,17 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: true}))
 
 app.post('/sendAlertMessage', upload.array(), (req, res) => {
+  messageArray.push(req.body)
   res.send(req.body)
-  if(h5room) {
-    h5room.say(req.body.html + req.body.link)
-    concact.say(JSON.stringify(req.body.text))
-  }
 })
+
+let timer = setInterval(() => {
+  if(h5room && messageArray.length) {
+    let message = messageArray.shift()
+    h5room.say(message.html + message.link)
+    concact.say(JSON.stringify(message))
+  }
+}, 120000)
 
 app.post('/sendTestMessage', upload.array(), (req, res) => {
   res.send(req.body)
