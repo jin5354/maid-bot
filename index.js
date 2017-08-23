@@ -2,7 +2,7 @@
  * @Filename: index.js
  * @Author: jin
  * @Email: xiaoyanjinx@gmail.com
- * @Last Modified time: 2017-08-23 09:33:56
+ * @Last Modified time: 2017-08-23 11:40:41
  */
 
 import express from 'express'
@@ -10,6 +10,10 @@ import bodyParser from 'body-parser'
 import multer from 'multer'
 import {Wechaty, Room, Contact} from 'wechaty'
 import QrcodeTerminal from 'qrcode-terminal'
+
+const idMap = {
+  'yuyi@weidian.com': '余翼'
+}
 
 let concact
 let h5room
@@ -70,6 +74,13 @@ app.post('/sendTestMessage', upload.array(), (req, res) => {
   res.send(req.body)
   if(concact) {
     concact.say(req.body.text)
+  }
+})
+
+app.post('/sendTestRoomMessage', upload.array(), (req, res) => {
+  res.send(req.body)
+  if(h5room) {
+    h5room.say(req.body.text)
   }
 })
 
