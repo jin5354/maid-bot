@@ -2,7 +2,7 @@
  * @Filename: index.js
  * @Author: jin
  * @Email: xiaoyanjinx@gmail.com
- * @Last Modified time: 2017-08-23 11:40:41
+ * @Last Modified time: 2017-08-23 11:51:21
  */
 
 import express from 'express'
@@ -66,7 +66,7 @@ let timer = setInterval(() => {
   if(h5room && messageArray.length) {
     let message = messageArray.shift()
     h5room.say(message.html + message.link)
-    concact.say(JSON.stringify(message))
+    //concact.say(JSON.stringify(message))
   }
 }, 120000)
 
