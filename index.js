@@ -2,7 +2,7 @@
  * @Filename: index.js
  * @Author: jin
  * @Email: xiaoyanjinx@gmail.com
- * @Last Modified time: 2017-08-23 11:51:21
+ * @Last Modified time: 2017-08-24 08:24:38
  */
 
 import express from 'express'
@@ -10,10 +10,6 @@ import bodyParser from 'body-parser'
 import multer from 'multer'
 import {Wechaty, Room, Contact} from 'wechaty'
 import QrcodeTerminal from 'qrcode-terminal'
-
-const idMap = {
-  'yuyi@weidian.com': '余翼'
-}
 
 let concact
 let h5room
@@ -37,18 +33,6 @@ Wechaty.instance() // Singleton
       console.log(JSON.stringify(target))
       concact = target
     })
-  })
-  .on('message', (message) => {
-    // const room    = message.room()
-    // const sender  = message.from()
-    // const content = message.content()
-
-    //console.log(sender)
-    //console.log(content)
-
-    if(!message.self()) {
-      //concact.say(content)
-    }
   })
   .init()
 
